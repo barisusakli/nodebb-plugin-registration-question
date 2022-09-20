@@ -1,35 +1,29 @@
 "use strict";
 
-var plugin = {};
-var meta = require.main.require('./src/meta');
+const plugin = module.exports;
+const meta = require.main.require('./src/meta');
 
-plugin.init = function(params, callback) {
-	var app = params.router,
-		middleware = params.middleware,
-		controllers = params.controllers;
-		
-	app.get('/admin/registration-question', middleware.admin.buildHeader, renderAdmin);
-	app.get('/api/admin/registration-question', renderAdmin);
-
-	callback();
+plugin.init = async function(params) {
+	const { router } = params;
+	const routeHelpers = require.main.require('./src/routes/helpers');
+	routeHelpers.setupAdminPageRoute(router, '/admin/plugins/registration-question', [], renderAdmin);
 };
 
-plugin.addAdminNavigation = function(header, callback) {
+plugin.addAdminNavigation = async function(header) {
 	header.plugins.push({
-		route: '/registration-question',
+		route: '/plugins/registration-question',
 		icon: 'fa-tint',
 		name: 'Registration Question'
 	});
-
-	callback(null, header);
+	return header;
 };
 
-plugin.addCaptcha = function(params, callback) {
-	var question = meta.config['registration-question:question'];
+plugin.addCaptcha = async function (params) {
+	const question = meta.config['registration-question:question'];
 
-	var captcha = {
+	const captcha = {
 		label: 'Registration Question',
-		html: '<div class="well"><strong>' + question + '</strong><br /><input class="form-control" name="registration-question" id="registration-question" /></div>'
+		html: '<div class="card card-body"><strong>' + question + '</strong><br /><input class="form-control" name="registration-question" id="registration-question" /></div>'
 	};
 
 	if (params.templateData.regFormEntry && Array.isArray(params.templateData.regFormEntry)) {
@@ -38,21 +32,19 @@ plugin.addCaptcha = function(params, callback) {
 		params.templateData.captcha = captcha;
 	}
 
-	callback(null, params);
+	return params;
 };
 
-plugin.checkRegister = function(params, callback) {
-	var answer = String(meta.config['registration-question:answer']);
-
+plugin.checkRegister = async function(params) {
+	const answer = String(meta.config['registration-question:answer']);
 	if (answer.toLowerCase() !== params.req.body['registration-question'].toLowerCase()) {
-		callback({source: 'registration-question', message: 'wrong-answer'}, params);
-	} else {
-		callback(null, params);
+		throw new Error('Wrong registration answer');
 	}
+	return params;
 };
 
-function renderAdmin(req, res, next) {
-	res.render('admin/registration-question', {});
+function renderAdmin(req, res) {
+	res.render('admin/plugins/registration-question', {});
 }
 
 module.exports = plugin;

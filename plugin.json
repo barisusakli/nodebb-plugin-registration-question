@@ -21,11 +21,11 @@
 	"staticDirs": {
 		"static": "./static"
 	},
-	"less": [
-		"static/style.less"
-	],
 	"scripts": [
 		"static/lib/main.js"
 	],
+	"modules": {
+		"../admin/plugins/registration-question.js": "static/lib/admin.js"
+	},
 	"templates": "static/templates"
 }

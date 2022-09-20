@@ -5,7 +5,7 @@
   "main": "library.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/psychobunny/nodebb-plugin-registration-question"
+    "url": "https://github.com/barisusakli/nodebb-plugin-registration-question"
   },
   "keywords": [
     "nodebb",
@@ -15,15 +15,15 @@
     "question"
   ],
   "author": {
-    "name": "psychobunny",
-    "email": "psycho.bunny@hotmail.com"
+    "name": "Baris Soner Usakli",
+    "email": "baris@nodebb.org"
   },
   "license": "BSD-2-Clause",
   "bugs": {
-    "url": "https://github.com/psychobunny/nodebb-plugin-registration-question/issues"
+    "url": "https://github.com/barisusakli/nodebb-plugin-registration-question/issues"
   },
   "nbbpm": {
-    "compatibility": "^0.7.0 || ^0.8.0"
+    "compatibility": "^3.0.0"
   },
   "readmeFilename": "README.md"
 }
