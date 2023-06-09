@@ -6,7 +6,7 @@ const meta = require.main.require('./src/meta');
 plugin.init = async function(params) {
 	const { router } = params;
 	const routeHelpers = require.main.require('./src/routes/helpers');
-	routeHelpers.setupAdminPageRoute(router, '/admin/plugins/registration-question', [], renderAdmin);
+	routeHelpers.setupAdminPageRoute(router, '/admin/plugins/registration-question', renderAdmin);
 };
 
 plugin.addAdminNavigation = async function(header) {
@@ -44,7 +44,7 @@ plugin.checkRegister = async function(params) {
 };
 
 function renderAdmin(req, res) {
-	res.render('admin/plugins/registration-question', {});
+	res.render('admin/plugins/registration-question', {
+		title: 'Registration Question & Answer',
+	});
 }
-
-module.exports = plugin;
