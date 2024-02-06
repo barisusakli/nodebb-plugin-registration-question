@@ -20,10 +20,13 @@ plugin.addAdminNavigation = async function(header) {
 
 plugin.addCaptcha = async function (params) {
 	const question = meta.config['registration-question:question'];
-
+	const inputId = 'registration-question';
 	const captcha = {
-		label: 'Registration Question',
-		html: '<div class="card card-body"><strong>' + question + '</strong><br /><input class="form-control" name="registration-question" id="registration-question" /></div>'
+		label: `Registration Question<br/>${question}`,
+		inputId: inputId,
+		html: `
+			<input class="form-control" name="${inputId}" id="${inputId}" aria-required="true" />
+		`,
 	};
 
 	if (params.templateData.regFormEntry && Array.isArray(params.templateData.regFormEntry)) {

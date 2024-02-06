@@ -2,9 +2,10 @@
 /*global utils, app*/
 
 $(function() {
-	$(window).on('action:ajaxify.end', function(e, data) {
-		if (data.url === 'register' && utils.param('error') === 'wrong-answer') {
-			app.alertError('You have answered the registration question incorrectly - please try again.');
+	$(window).on('action:ajaxify.end', async function () {
+		if (ajaxify.data.template.register && utils.param('error') === 'wrong-answer') {
+			const alerts = await app.require('alerts');
+			alerts.error('You have answered the registration question incorrectly - please try again.');
 		}
 	});
 });
