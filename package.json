@@ -1,6 +1,6 @@
 {
   "name": "@nodebb/nodebb-plugin-registration-question",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Question and Answer plugin for the NodeBB registration form",
   "main": "library.js",
   "repository": {
