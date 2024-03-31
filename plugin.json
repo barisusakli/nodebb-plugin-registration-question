@@ -24,5 +24,6 @@
 	"modules": {
 		"../admin/plugins/registration-question.js": "static/lib/admin.js"
 	},
-	"templates": "static/templates"
+	"templates": "static/templates",
+	"languages": "languages"
 }

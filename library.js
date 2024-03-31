@@ -6,7 +6,11 @@ const meta = require.main.require('./src/meta');
 plugin.init = async function(params) {
 	const { router } = params;
 	const routeHelpers = require.main.require('./src/routes/helpers');
-	routeHelpers.setupAdminPageRoute(router, '/admin/plugins/registration-question', renderAdmin);
+	routeHelpers.setupAdminPageRoute(router, '/admin/plugins/registration-question', function (req, res) {
+		res.render('admin/plugins/registration-question', {
+			title: 'Registration Question & Answer',
+		});
+	});
 };
 
 plugin.addAdminNavigation = async function(header) {
@@ -22,7 +26,7 @@ plugin.addCaptcha = async function (params) {
 	const question = meta.config['registration-question:question'];
 	const inputId = 'registration-question';
 	const captcha = {
-		label: `Registration Question<br/>${question}`,
+		label: `[[registration-question:input-label]]<br/>${question}`,
 		inputId: inputId,
 		html: `
 			<input class="form-control" name="${inputId}" id="${inputId}" aria-required="true" />
@@ -41,13 +45,8 @@ plugin.addCaptcha = async function (params) {
 plugin.checkRegister = async function(params) {
 	const answer = String(meta.config['registration-question:answer']);
 	if (answer.toLowerCase() !== params.req.body['registration-question'].toLowerCase()) {
-		throw new Error('Wrong registration answer');
+		throw new Error('[[registration-question:error-wrong-answer]]');
 	}
 	return params;
 };
 
-function renderAdmin(req, res) {
-	res.render('admin/plugins/registration-question', {
-		title: 'Registration Question & Answer',
-	});
-}
